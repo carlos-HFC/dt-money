@@ -4,6 +4,8 @@ import * as Dialog from "@radix-ui/react-dialog"
 import { Controller, useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { useTransaction } from "../../contexts/Transactions"
+
 import {
   Close,
   Content,
@@ -22,12 +24,17 @@ const newTransactionFormSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
-  const { register, handleSubmit, formState, control } =
+  const { createTransaction } = useTransaction()
+
+  const { register, reset, handleSubmit, formState, control } =
     useForm<NewTransactionFormInputs>({
       resolver: zodResolver(newTransactionFormSchema),
     })
 
-  async function handleCreateNewTransaction(data: NewTransactionFormInputs) {}
+  async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
+    await createTransaction(data)
+    reset()
+  }
 
   return (
     <Dialog.Portal>

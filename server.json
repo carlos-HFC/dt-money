@@ -6,7 +6,7 @@
       "type": "income",
       "category": "Venda",
       "price": 14000,
-      "createdAt": "2024-03-19T13:00:00.000Z"
+      "createdAt": "2024-03-14T13:00:00.000Z"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "type": "outcome",
       "category": "Alimentação",
       "price": 70,
-      "createdAt": "2024-03-19T13:10:00.000Z"
+      "createdAt": "2024-03-15T21:10:00.000Z"
     },
     {
       "id": 3,
@@ -22,7 +22,31 @@
       "type": "outcome",
       "category": "Eletrônico",
       "price": 2000,
-      "createdAt": "2024-03-19T15:10:00.000Z"
+      "createdAt": "2024-03-17T15:10:00.000Z"
+    },
+    {
+      "description": "Rocketseat Plus",
+      "category": "Educação",
+      "price": 2000,
+      "type": "outcome",
+      "createdAt": "2024-03-19T17:21:30.453Z",
+      "id": 4
+    },
+    {
+      "description": "Salário",
+      "category": "Salário",
+      "price": 5000,
+      "type": "income",
+      "createdAt": "2024-03-19T17:24:48.491Z",
+      "id": 5
+    },
+    {
+      "description": "Mercado",
+      "category": "Alimentação",
+      "price": 40,
+      "type": "outcome",
+      "createdAt": "2024-03-19T17:30:27.703Z",
+      "id": 6
     }
   ]
 }
