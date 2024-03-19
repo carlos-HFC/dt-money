@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react"
+
 import { api } from "../../services/api"
 
 interface Transaction {
@@ -18,6 +19,7 @@ interface Transaction {
 
 interface TransactionContextProps {
   transactions: Transaction[]
+  fetchTransactions(query?: string): Promise<void>
 }
 
 export const TransactionContext = createContext({} as TransactionContextProps)
@@ -28,17 +30,21 @@ export function TransactionProvider(props: PropsWithChildren) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
   useEffect(() => {
-    loadTransactions()
+    fetchTransactions()
   }, [])
 
-  async function loadTransactions() {
-    const response = await api.get("/transactions")
+  async function fetchTransactions(query?: string) {
+    const response = await api.get("/transactions", {
+      params: {
+        q: query,
+      },
+    })
 
     setTransactions(response.data)
   }
 
   return (
-    <TransactionContext.Provider value={{ transactions }}>
+    <TransactionContext.Provider value={{ transactions, fetchTransactions }}>
       {props.children}
     </TransactionContext.Provider>
   )
