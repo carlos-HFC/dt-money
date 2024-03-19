@@ -1,10 +1,5 @@
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react"
+import { PropsWithChildren, useCallback, useEffect, useState } from "react"
+import { createContext, useContextSelector } from "use-context-selector"
 
 import { api } from "../../services/api"
 
@@ -32,16 +27,13 @@ interface TransactionContextProps {
 
 export const TransactionContext = createContext({} as TransactionContextProps)
 
-export const useTransaction = () => useContext(TransactionContext)
+export const useTransaction = () =>
+  useContextSelector(TransactionContext, selector => selector)
 
 export function TransactionProvider(props: PropsWithChildren) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  useEffect(() => {
-    fetchTransactions()
-  }, [])
-
-  async function fetchTransactions(query?: string) {
+  const fetchTransactions = useCallback(async (query?: string) => {
     const response = await api.get("/transactions", {
       params: {
         _sort: "createdAt",
@@ -51,16 +43,20 @@ export function TransactionProvider(props: PropsWithChildren) {
     })
 
     setTransactions(response.data)
-  }
+  }, [])
 
-  async function createTransaction(data: CreateTransaction) {
+  const createTransaction = useCallback(async (data: CreateTransaction) => {
     const response = await api.post("/transactions", {
       ...data,
       createdAt: new Date(),
     })
 
     setTransactions(prev => [response.data, ...prev])
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchTransactions()
+  }, [fetchTransactions])
 
   return (
     <TransactionContext.Provider
